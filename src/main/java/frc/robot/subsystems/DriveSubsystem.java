@@ -13,26 +13,33 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DriveSubsystem extends SubsystemBase {
-  /** Creates a new DriveSubsystem. */
+  //Initializing motors
   private CANSparkMax frontLeft = new CANSparkMax(Constants.FL_ID, MotorType.kBrushless);
   private CANSparkMax frontRight = new CANSparkMax(Constants.FR_ID, MotorType.kBrushless);
   private CANSparkMax backLeft = new CANSparkMax(Constants.BL_ID, MotorType.kBrushless);
   private CANSparkMax backRight = new CANSparkMax(Constants.BR_ID, MotorType.kBrushless);
 
+  //Creating motor control group
   private MotorControllerGroup leftMotors;
   private MotorControllerGroup rightMotors;
 
+  //Creating the differential drive
   private DifferentialDrive diffDrive;
 
   public DriveSubsystem() {
+    //Initializing the motor control group
     leftMotors = new MotorControllerGroup(frontLeft, backLeft);
     rightMotors = new MotorControllerGroup(frontRight, backRight);
 
+    //Set right motors or left motors inverted depending on which way they were installed to ensure 
+    //full power goes forwards, not backwards
     rightMotors.setInverted(true);
 
+    //Initializing the differential drive
     diffDrive = new DifferentialDrive(leftMotors, rightMotors);
   }
 
+  //Taking in speed and rotation to control the differential drive
   public void move(double speed, double rotation){
     diffDrive.arcadeDrive(speed, rotation);
   }

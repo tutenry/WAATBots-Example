@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class DriveCommand extends CommandBase {
-  /** Creates a new DriveCommand. */
   DriveSubsystem drive;
   XboxController control;
   public DriveCommand(DriveSubsystem drive, XboxController control) {
     this.drive = drive;
     this.control = control;
+    //Add requirements to ensure commands don't overlap on the same subsystem
     addRequirements(drive);
   }
 
@@ -25,7 +25,8 @@ public class DriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (control.getLeftY() < 0.1 && control.getLeftX() < 0.1){
+    //Getting control data to move the robot
+    if (Math.sqrt(Math.pow(control.getLeftY(), 2) +  Math.pow(control.getLeftX(), 2)) < 0.1){
       drive.stop();
     }
     else{
@@ -33,11 +34,10 @@ public class DriveCommand extends CommandBase {
     }
   }
 
-  // Called once the command ends or is interrupted.
+  
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
