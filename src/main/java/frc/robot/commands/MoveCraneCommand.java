@@ -7,16 +7,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.CraneSubsystem;
 
-public class DriveCommand extends CommandBase {
-  DriveSubsystem drive;
+public class MoveCraneCommand extends CommandBase {
+  /** Creates a new MoveCraneCommand. */
+  CraneSubsystem crane;
   PS4Controller control;
-  public DriveCommand(DriveSubsystem drive, PS4Controller control) {
-    this.drive = drive;
+  public MoveCraneCommand(CraneSubsystem crane, PS4Controller control) {
+    this.crane = crane;
     this.control = control;
-    //Add requirements to ensure commands don't overlap on the same subsystem
-    addRequirements(drive);
+    addRequirements(crane);
   }
 
   // Called when the command is initially scheduled.
@@ -26,19 +26,15 @@ public class DriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //Getting control data to move the robot
-    if (Math.sqrt(Math.pow(control.getLeftY(), 2) +  Math.pow(control.getLeftX(), 2)) < 0.1){
-      drive.stop();
-    }
-    else{
-      drive.move(control.getLeftY(), control.getLeftX());
-    }
+    crane.moveUpDown(control.getRightY());
+    crane.moveLeftRight(control.getRightX());
   }
 
-  
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
+  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
