@@ -18,5 +18,10 @@ public final class Constants {
   public static final int BL_ID = 3;
   public static final int BR_ID = 4;
 
+  public static final int PneumaticsHubID = 0;
+  public static final int SolenoidPort = 0;
+  public static final int PneumaticsMinPressure = 100;
+  public static final int PneumaticsMaxPressure = 120;
+
   public static final int CONTROL_ID = 0;
 }

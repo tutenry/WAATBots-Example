@@ -6,8 +6,10 @@ package frc.robot;
 
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.MoveCraneCommand;
+import frc.robot.commands.PneumaticsCommand;
 import frc.robot.subsystems.CraneSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.PneumaticsSubsystem;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -18,14 +20,16 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here
   DriveSubsystem drive = new DriveSubsystem();
-  CraneSubsystem crane;
+  CraneSubsystem crane = new CraneSubsystem();
+  PneumaticsSubsystem pneumatics = new PneumaticsSubsystem();
 
   PS4Controller control = new PS4Controller(Constants.CONTROL_ID);
 
   public RobotContainer() {
-    // Configure the trigger bindings
+    // Set default commands
     drive.setDefaultCommand(new DriveCommand(drive, control));
     crane.setDefaultCommand(new MoveCraneCommand(crane, control));
+    pneumatics.setDefaultCommand(new PneumaticsCommand(pneumatics, control));
     
 
     configureBindings();
